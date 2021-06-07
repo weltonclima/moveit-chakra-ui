@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { SideBar } from "../components/SideBar";
 import { useChallengesContext } from "../hooks/useHooks";
 
 interface CountDownContextData {
@@ -60,6 +61,5 @@ export function CountDownProvider({ children }: CountDownProviderProps) {
     >
       {children}
     </CountDownContext.Provider>
-
   );
 }

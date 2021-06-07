@@ -1,96 +1,89 @@
-import React, { useState } from "react";
+import { getSession, signIn } from "next-auth/client";
+import { FaGithub } from 'react-icons/fa';
+import React from 'react'
+import { Box, Flex, Icon, Image, Img, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
 import Head from "next/head";
-import { ExperienceBar } from "../components/ExperienceBar/index";
-import { Profile } from "../components/Profile/index";
-import { CompletedChallenges } from "../components/CompletedChallenges/index";
-import { CountDown } from "../components/CountDown/index";
-import { ChallengeBox } from "../components/ChallengeBox/index";
-import { CountDownProvider } from "../contexts/CountDownContext";
-import { ChallengesProvider } from "../contexts/ChallengesContext";
-import { Login } from "../components/Login/index";
-import { Logo } from "../components/Logo/index";
-import { getSession } from "next-auth/client";
-import {
-  Container, BackLogin,
-  ContainerLogin
-} from "../styles/Home";
-import { SideBar } from "../components/SideBar/index";
-import { LeaderBoard } from "../components/LeaderBoard/index";
 import { GetServerSideProps } from "next";
-import { Session } from "next-auth";
 
-interface HomeProps {
-  session: Session
-}
-
-export default function Home({ session }: HomeProps) {
-  const [home, setHome] = useState(true);
+export default function Login() {
+  const isDrawerSidebar = useBreakpointValue({
+    base: true,
+    lg: false,
+  })
 
   return (
-    <ChallengesProvider>
-      <CountDownProvider>
-        {!session ? (
-          <BackLogin>
-            <ContainerLogin>
-              <Head>
-                <title>Login | move.it</title>
-              </Head>
-              <section>
-                <div>
-                  <Logo />
-                </div>
-                <div>
-                  <Login />
-                </div>
-              </section>
-            </ContainerLogin>
-          </BackLogin>
-        ) : (
-          <Container>
+    <Flex h="100vh" w="100vw"
+      background="blue.900" justifyContent="center" >
+      <Head>
+        <title>Login | move.it</title>
+      </Head>
+      <Flex px="10" py="8" mx={0} my="auto" borderRadius="md"
+        background="blue.800" maxW={1000} >
+        {!isDrawerSidebar &&
+          <Box>
+            <Img w="33.6rem" h="28.87rem"
+              src="Simbolo.svg" alt="Logo do Login"
+            />
+          </Box>}
+        <Stack mt="12">
+          <Image w="64" h="14" mt="12"
+            src="Logo.svg" alt="Logo move.it"
+          />
+          <Text
+            color="gray.100"
+            lineHeight="8"
+            fontSize="1.57rem"
+            fontWeight="bold"
+          >
+            Bem-vindo
+          </Text>
+          <Box>
+            <Text
+              as="small"
+              display="inline-block"
+              fontStyle="normal"
+              fontWeight="bold"
+              color="purple"
+              fontSize="1.40rem"
+              lineHeight="8" mt="6" mb="9"
+            >
+              Faça login para começar
+        </Text>
+          </Box>
+          <Box>
 
-            <Head>
-              <title>Inicio | move.it</title>
-            </Head>
-            {home ? <>
-              <ExperienceBar />
-              <SideBar
-                setHome={setHome}
-                home={home}
-              />
-              <section>
-                <div>
-                  <Profile />
-                  <CompletedChallenges />
-                  <CountDown />
-                </div>
-                <div>
-                  <ChallengeBox />
-                </div>
-              </section>
-            </> : <>
-              <Head>
-                <title>LeaderBoard | move.it</title>
-              </Head>
-              <SideBar
-                setHome={setHome}
-                home={home}
-              />
-              <LeaderBoard 
-                home={home}
-              />
-            </>}
-          </Container>
-        )}
-      </CountDownProvider>
-    </ChallengesProvider >
+            <Icon
+              as={FaGithub}
+              fontSize="5xl"
+              background="blue.800"
+              color="white"
+              borderRadius="full"
+              onClick={() => signIn('github')}
+              _hover={{
+                background: "white", color: "blue.800", cursor: "pointer"
+              }} />
+          </Box>
+        </Stack>
+      </Flex>
+    </Flex>
   )
 }
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
 
+  if (!!session) {
+    console.log('Index')
+    return {
+      redirect: {
+        destination: '/app',
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: {
-      session,      
+
     }
   }
 }

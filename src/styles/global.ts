@@ -8,9 +8,9 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 :root {
-  --white: #fff;
-  --background: #f2f3f5;
-  --gray-line: #dcdde0;
+  --white: #fff; //100
+  --background: #f2f3f5; //200
+  --gray-line: #dcdde0;  //300 
   --text: #666666;
   --text-highlight: #b3b9ff;
   --title: #2e384d;

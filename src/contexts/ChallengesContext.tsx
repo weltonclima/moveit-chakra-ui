@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
-import { LevelUpModal } from "../components/LevelUpModal/index";
+import { LevelUpModal } from "../components/LevelUpModal";
 import { api } from "../services/api";
 import { getSession } from "next-auth/client";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { useRouter } from "next/dist/client/router";
 
 interface Challenge {
   type: 'body' | 'eye';
@@ -35,7 +37,9 @@ interface ChallengesContextData {
   startNewChallenge: () => void;
   resetChallenge: () => void;
   completeChallenge: () => void;
-  closeLevelUpModal: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onOpen: () => void;
 }
 
 interface ChallengesProviderProps {
@@ -49,7 +53,10 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const [currentExperience, setCurrentExperience] = useState<number>(0);
   const [challengesCompleted, setClallengesCompleted] = useState<number>(0);
   const [activeChallenge, setActiveChallenge] = useState(null);
-  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure()
+  const router = useRouter();
+
+  useEffect(() => { onClose(); }, [router.asPath]);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
@@ -70,10 +77,6 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   useEffect(() => {
     Notification.requestPermission()
   }, [])
-
-  function closeLevelUpModal() {
-    setIsLevelUpModalOpen(false);
-  }
 
   function startNewChallenge() {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length);
@@ -110,7 +113,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       finalExperience -= experienceToNextLevel;
       finallevel += 1;
       setLevel(finallevel);
-      setIsLevelUpModalOpen(true);
+      onOpen();
     }
     setCurrentExperience(finalExperience);
     setActiveChallenge(null);
@@ -140,11 +143,13 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
         startNewChallenge,
         resetChallenge,
         completeChallenge,
-        closeLevelUpModal,
+        isOpen,
+        onClose,
+        onOpen,
       }}
     >
       {children}
-      {isLevelUpModalOpen && <LevelUpModal />}
+      <LevelUpModal />
     </ChallengesContext.Provider>
   );
 }
