@@ -4,10 +4,11 @@ import { ReactNode } from "react";
 interface TdProps extends TableCellProps {
   children: ReactNode
   bl?: boolean;
+  br?: boolean;
 }
 
 export function Td({ 
-  children, bl = false, ...rest
+  children, bl = false, br = false, ...rest
 }: TdProps) {
   return (
     <ChakraTd
@@ -15,9 +16,11 @@ export function Td({
       //borderBottom="8px"
       borderColor="gray.200"
       fontSize="lg"
-      borderTopRightRadius={bl && "xl"}
-      borderBottomRightRadius={bl && "xl"}
-      borderBottomWidth="8px"
+      borderTopLeftRadius={bl && "xl"}
+      borderBottomLeftRadius={bl && "xl"}
+      borderTopRightRadius={br && "xl"}
+      borderBottomRightRadius={br && "xl"}
+      borderBottomWidth="6px"
       
       {...rest}
     >

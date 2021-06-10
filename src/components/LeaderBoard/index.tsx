@@ -39,10 +39,8 @@ export function LoaderBoard({ users }: LoaderBoardProps) {
               <Tr key={user.data.id}>
                 <Td
                   textAlign="center"
-                  borderRight="4px" borderRightColor="gray.200"
-                  borderTopLeftRadius="xl"
-                  borderBottomLeftRadius="xl"
-                  borderBottomWidth="8px"
+                  borderRightWidth="4px" borderRightColor="gray.200"
+                  bl={true}
                 >
                   {index + 1}
                 </Td>
@@ -50,7 +48,6 @@ export function LoaderBoard({ users }: LoaderBoardProps) {
                   fontSize="xl"
                   fontWeight="bold"
                   fontStyle="normal"
-                  bl={true}
                 >
                   <Flex>
                     <Avatar src={user.data.avatar_url} alt={user.data.name} mr="2" />
@@ -70,11 +67,7 @@ export function LoaderBoard({ users }: LoaderBoardProps) {
                         {user.data.challengesCompleted}
                       </Text> completados
                         </Td>
-                    <Td
-                      borderTopRightRadius="xl"
-                      borderBottomRightRadius="xl"
-                      borderBottomWidth="8px"
-                    >
+                    <Td br={true} >
                       <Text as="span" color="blue.800">
                         {user.data.currentExperience}
                       </Text> xp
