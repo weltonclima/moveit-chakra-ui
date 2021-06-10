@@ -4,11 +4,11 @@ import { useSession } from 'next-auth/client';
 import { useChallengesContext } from '../hooks/useHooks';
 
 export function Profile() {
-  const { level } = useChallengesContext();
+  const { level, challengesCompleted } = useChallengesContext();
   const [session] = useSession()
 
   return (
-    <Flex alignItems="center" mt="2" px={["1","0"]}>
+    <Box alignItems="center" mt="2" px={["1", "0"]}>
       <HStack>
         <Avatar size="lg" src={session?.user.image} alt={session?.user.name} />
         <Stack>
@@ -23,6 +23,13 @@ export function Profile() {
           </Text>
         </Stack>
       </HStack>
-    </Flex>
+      <Flex px={["1", "0"]}
+        alignItems="center" justifyContent="space-between"
+        m="2rem 0" pb="4" borderBottom="1px" borderColor="gray.350"
+      >
+        <Text fontSize="1.25rem">Desfios completos </Text>
+        <Text fontSize="1.5rem">{challengesCompleted}</Text>
+      </Flex>
+    </Box>
   );
 }

@@ -2,22 +2,9 @@ import {
   Avatar, Box, Flex, Heading, Img, Table,
   Tbody, Text, Thead, Tr, useBreakpointValue
 } from "@chakra-ui/react";
+import { User } from "../../pages/loaderboard";
 import { Td } from "./Td";
 import { Th } from "./Th";
-
-interface User {
-  ref: {
-    id: string;
-  },
-  data: {
-    id: number;
-    name: string;
-    avatar_url: string;
-    level: number;
-    currentExperience: number;
-    challengesCompleted: number;
-  }
-}
 
 interface LoaderBoardProps {
   users: User[];
@@ -29,8 +16,8 @@ export function LoaderBoard({ users }: LoaderBoardProps) {
     lg: false,
   })
   return (
-    <Flex justifyContent="center" h="100vh" w="100vw" mx={["1", "0"]} >
-      <Box w="100%" mx={0} my="auto" maxW="992px">
+    <Flex justifyContent="center" h="100vh" w="100vw">
+      <Box w="100%" my="auto" maxW="992px" mx={["0", "1"]} >
         <Heading my="4" lineHeight="8" color="gray.500" fontSize="3xl">
           LeaderBoard
         </Heading>

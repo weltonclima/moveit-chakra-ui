@@ -77,7 +77,7 @@ export function CountDown() {
               _hover={{ color: "gray.100", background: "blue.900" }}
               onClick={startCountdown}
             >
-              Iniciar um Ciclo'
+              Iniciar um Ciclo
             </Button>
           )}
         </>

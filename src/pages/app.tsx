@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
-import { CompletedChallenges } from "../components/CompletedChallenges";
 import { CountDown } from "../components/CountDown";
 import { ChallengeBox } from "../components/ChallengeBox";
 import { getSession } from "next-auth/client";
 import { SideBar } from "../components/SideBar";
 import { GetServerSideProps } from "next";
-import { Session } from "next-auth";
 import { Box, Flex, SimpleGrid, Stack } from "@chakra-ui/layout";
 import { useBreakpointValue } from "@chakra-ui/media-query";
-import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
 import { Img } from "@chakra-ui/image";
+import { useCountDownContext } from "../hooks/useHooks";
 
 export default function Home() {
-  const { onOpen } = useSidebarDrawer();
+  const { onOpen } = useCountDownContext();
   const isDrawerSidebar = useBreakpointValue({
     base: true,
     lg: false,
@@ -46,7 +44,6 @@ export default function Home() {
             <SimpleGrid columns={2} gap="8" flex="1" minChildWidth={350}>
               <Stack>
                 <Profile />
-                <CompletedChallenges />
                 <CountDown />
               </Stack>
               <ChallengeBox />
@@ -61,7 +58,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
 
   if (!!!session) {
-    console.log('App')
     return {
       redirect: {
         destination: '/',

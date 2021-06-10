@@ -1,15 +1,14 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { SideBar } from "../components/SideBar";
-import { Avatar, Box, Flex, Heading, Img, Table, Tbody, Text, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Img, useBreakpointValue } from "@chakra-ui/react";
 import { api } from "../services/api";
 import { getSession } from "next-auth/client";
 import { GetServerSideProps } from "next";
-import { Th } from "../components/LeaderBoard/Th";
-import { Td } from "../components/LeaderBoard/Td";
-import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
+import { LoaderBoard } from "../components/LeaderBoard";
+import { useCountDownContext } from "../hooks/useHooks";
 
-interface User {
+export interface User {
   ref: {
     id: string;
   },
@@ -23,8 +22,8 @@ interface User {
   }
 }
 
-export default function LoaderBoard() {
-  const { onOpen } = useSidebarDrawer();
+export default function LoaderBoardPage() {
+  const { onOpen } = useCountDownContext();
   const [users, setUsers] = useState<User[]>([]);
   const isDrawerSidebar = useBreakpointValue({
     base: true,
@@ -44,16 +43,25 @@ export default function LoaderBoard() {
       <Head>
         <title>LeaderBoard | move.it</title>
       </Head>
-      <Box>
-        {isDrawerSidebar &&
-          <Img w="6" m="2"
-            src="LogoSideBar.svg" alt="Logo"
-            onClick={onOpen}
-          />
-        }
-        <SideBar h="100vh" />
-        <LoaderBoard/>
-      </Box>
+      {
+        isDrawerSidebar ?
+          <Box>
+            <Img w="6" m="2"
+              src="LogoSideBar.svg" alt="Logo"
+              onClick={onOpen}
+            />
+            <LoaderBoard
+              users={users}
+            />
+          </Box>
+          :
+          <Flex>
+            <SideBar h="100vh" />
+            <LoaderBoard
+              users={users}
+            />
+          </Flex>
+      }
     </>
   )
 }
@@ -62,7 +70,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
 
   if (!!!session) {
-    console.log('App')
     return {
       redirect: {
         destination: '/',
