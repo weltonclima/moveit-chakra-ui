@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Head from "next/head";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
@@ -7,9 +7,7 @@ import { ChallengeBox } from "../components/ChallengeBox";
 import { getSession } from "next-auth/client";
 import { SideBar } from "../components/SideBar";
 import { GetServerSideProps } from "next";
-import { Box, Flex, SimpleGrid, Stack } from "@chakra-ui/layout";
-import { useBreakpointValue } from "@chakra-ui/media-query";
-import { Img } from "@chakra-ui/image";
+import { Box, Flex, SimpleGrid, Stack, useBreakpointValue, Img } from "@chakra-ui/react";
 import { useCountDownContext } from "../hooks/useHooks";
 
 export default function Home() {

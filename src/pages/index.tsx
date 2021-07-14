@@ -1,7 +1,7 @@
 import { getSession, signIn } from "next-auth/client";
 import { FaGithub } from 'react-icons/fa';
 import React from 'react'
-import { Box, Flex, Icon, Image, Img, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Icon, Img, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 
@@ -26,7 +26,7 @@ export default function Login() {
             />
           </Box>}
         <Stack mt="12">
-          <Image w="64" h="14" mt="12"
+          <Img w="64" h="14" mt="12"
             src="Logo.svg" alt="Logo move.it"
           />
           <Text
