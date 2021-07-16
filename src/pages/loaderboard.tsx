@@ -7,6 +7,14 @@ import { getSession } from "next-auth/client";
 import { GetServerSideProps } from "next";
 import { LoaderBoard } from "../components/LeaderBoard";
 import { useCountDownContext } from "../hooks/useHooks";
+import { fauna } from "../services/fauna";
+import { query as q } from 'faunadb'
+
+interface FaunaDb {
+  ref: string;
+  ts: number;
+  data: User[]
+}
 
 export interface User {
   ref: {
@@ -22,21 +30,28 @@ export interface User {
   }
 }
 
-export default function LoaderBoardPage() {
+interface LoaderBoardPageProps {
+  user: string;
+}
+
+export default function LoaderBoardPage({ user }: LoaderBoardPageProps) {
   const { onOpen } = useCountDownContext();
-  const [users, setUsers] = useState<User[]>([]);
+  //const [users, setUsers] = useState<User[]>([]);
   const isDrawerSidebar = useBreakpointValue({
     base: true,
     lg: false,
   })
-  useEffect(() => {
+
+  const users: User[] = JSON.parse(user)
+  
+  /*useEffect(() => {
     async function getUser() {
       const { data } = await api.get<User[]>('/users');
-
+      console.log("data",data)
       setUsers(data)
     }
     getUser()
-  }, [])
+  }, [])*/
 
   return (
     <>
@@ -74,6 +89,26 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       redirect: {
         destination: '/',
         permanent: false
+      }
+    }
+  }
+
+  const getUser = await fauna.query<FaunaDb>(
+    q.Map(
+      q.Paginate(q.Match(q.Index("sort_by_desc"))),
+      q.Lambda(
+        [
+          "level",
+          "currentExperience",
+          "Ref"
+        ], q.Get(q.Var("Ref")))
+    )
+  );
+  
+  if (getUser) {
+    return {
+      props: {
+        user: JSON.stringify(getUser.data)
       }
     }
   }

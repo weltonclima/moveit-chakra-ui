@@ -1,8 +1,9 @@
-import { Icon, Flex, Img, FlexProps } from "@chakra-ui/react";
+import { Icon, Flex, Img, FlexProps, Link as ChakraLink } from "@chakra-ui/react";
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
 import { FiHome, FiLogOut } from 'react-icons/fi';
 import { RiMedalLine } from 'react-icons/ri';
+import { ActiveLink } from "./ActiveLink";
 
 type SideBarProp = FlexProps
 
@@ -19,14 +20,16 @@ export function SideBar({ ...rest }: SideBarProp) {
       alignItems="center">
       <Img src="LogoSideBar.svg" alt="Logo" w="8" />
       <Flex flexDirection="column">
-        <Icon as={FiHome} fontSize="2xl" color="gray.360"
-          onClick={() => router.push("/app")} my="2"
-          _hover={{ color: "blue.800", cursor: "pointer" }}
-        />
-        <Icon as={RiMedalLine} fontSize="2xl" color="gray.360"
-          onClick={() => router.push("/loaderboard")} my="2"
-          _hover={{ color: "blue.800", cursor: "pointer" }}
-        />
+        <ActiveLink href="/app" passHref>
+          <ChakraLink my="2">
+            <Icon as={FiHome} fontSize="2xl" />
+          </ChakraLink>
+        </ActiveLink>
+        <ActiveLink href="/loaderboard" passHref>
+          <ChakraLink my="2">
+            <Icon as={RiMedalLine} fontSize="2xl" />
+          </ChakraLink>
+        </ActiveLink>
       </Flex>
       <Icon
         as={FiLogOut}
