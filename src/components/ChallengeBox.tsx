@@ -1,5 +1,9 @@
 import {
-  Img, Box, Flex, Heading, SimpleGrid, Stack, Text, Button
+  Box,
+  Button,
+  Flex, Heading,
+  Img,
+  SimpleGrid, Stack, Text
 } from '@chakra-ui/react';
 import { useChallengesContext, useCountDownContext } from '../hooks/useHooks';
 

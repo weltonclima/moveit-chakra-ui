@@ -1,32 +1,13 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { getSession } from "next-auth/client";
+import { useRouter } from "next/dist/client/router";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import challenges from '../../challenges.json';
 import { LevelUpModal } from "../components/LevelUpModal";
+import { Challenge } from "../interfaces/Challenge";
+import { Data } from "../interfaces/Data";
+import { User } from "../interfaces/User";
 import { api } from "../services/api";
-import { getSession } from "next-auth/client";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { useRouter } from "next/dist/client/router";
-
-interface Challenge {
-  type: 'body' | 'eye';
-  description: string;
-  amount: number;
-}
-
-interface Data {
-  id: number;
-  name: string;
-  avatar_url: string;
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
-
-interface User {
-  ref: {
-    id: string;
-  },
-  data: Data;
-}
 
 interface ChallengesContextData {
   level: number;
@@ -128,7 +109,7 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
       }
     }
 
-    const response = await api.put<User>('/user', body)
+    await api.put<User>('/user', body)
 
   }
 
@@ -153,3 +134,5 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
     </ChallengesContext.Provider>
   );
 }
+
+export const useChallengesContext = () => useContext(ChallengesContext);

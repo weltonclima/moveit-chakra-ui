@@ -1,34 +1,14 @@
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { SideBar } from "../components/SideBar";
 import { Box, Flex, Img, useBreakpointValue } from "@chakra-ui/react";
-import { api } from "../services/api";
-import { getSession } from "next-auth/client";
+import { query as q } from 'faunadb';
 import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/client";
+import Head from "next/head";
 import { LoaderBoard } from "../components/LeaderBoard";
+import { SideBar } from "../components/SideBar";
 import { useCountDownContext } from "../hooks/useHooks";
+import { FaunaDb } from "../interfaces/FaunaDb";
+import { User } from "../interfaces/User";
 import { fauna } from "../services/fauna";
-import { query as q } from 'faunadb'
-
-interface FaunaDb {
-  ref: string;
-  ts: number;
-  data: User[]
-}
-
-export interface User {
-  ref: {
-    id: string;
-  },
-  data: {
-    id: number;
-    name: string;
-    avatar_url: string;
-    level: number;
-    currentExperience: number;
-    challengesCompleted: number;
-  }
-}
 
 interface LoaderBoardPageProps {
   user: string;

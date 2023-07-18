@@ -1,5 +1,5 @@
 import { Img } from '@chakra-ui/image';
-import { HStack, Stack, Text, Avatar, Flex, Box } from '@chakra-ui/react';
+import { Avatar, Box, Flex, HStack, Stack, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/client';
 import { useChallengesContext } from '../hooks/useHooks';
 

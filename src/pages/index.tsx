@@ -1,9 +1,8 @@
-import { getSession, signIn } from "next-auth/client";
-import { FaGithub } from 'react-icons/fa';
-import React from 'react'
 import { Box, Flex, Icon, Img, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
-import Head from "next/head";
 import { GetServerSideProps } from "next";
+import { getSession, signIn } from "next-auth/client";
+import Head from "next/head";
+import { FaGithub } from 'react-icons/fa';
 
 export default function Login() {
   const isDrawerSidebar = useBreakpointValue({

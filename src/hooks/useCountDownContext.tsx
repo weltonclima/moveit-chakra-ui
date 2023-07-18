@@ -1,6 +1,6 @@
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useRouter } from "next/router";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { SidebarDrawer } from "../components/SidebarDrawer";
 import { useChallengesContext } from "../hooks/useHooks";
 
@@ -24,7 +24,7 @@ let countDownTimeout: NodeJS.Timeout;
 
 export function CountDownProvider({ children }: CountDownProviderProps) {
   const { startNewChallenge } = useChallengesContext();
-  const [time, setTime] = useState(0.1 * 60);
+  const [time, setTime] = useState(10 * 60);
   const [isActive, setisActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
   const { onClose, onOpen, isOpen } = useDisclosure();
@@ -42,7 +42,7 @@ export function CountDownProvider({ children }: CountDownProviderProps) {
     clearTimeout(countDownTimeout);
     setisActive(false);
     setHasFinished(false);
-    setTime(0.1 * 60);
+    setTime(10 * 60);
   }
 
   useEffect(() => {
@@ -78,3 +78,5 @@ export function CountDownProvider({ children }: CountDownProviderProps) {
     </CountDownContext.Provider>
   );
 }
+
+export const useCountDownContext = () => useContext(CountDownContext);

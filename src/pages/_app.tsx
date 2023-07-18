@@ -1,10 +1,9 @@
-import React from 'react';
-import { Provider } from 'next-auth/client';
-import { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react';
+import { Provider } from 'next-auth/client';
+import { AppProps } from 'next/app';
+import { ChallengesProvider } from '../hooks/useChallengesContext';
+import { CountDownProvider } from '../hooks/useCountDownContext';
 import { theme } from '../styles/theme';
-import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { CountDownProvider } from '../contexts/CountDownContext';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 

@@ -1,4 +1,4 @@
-import { TableCellProps, Td as ChakraTd } from "@chakra-ui/react";
+import { Td as ChakraTd, TableCellProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface TdProps extends TableCellProps {

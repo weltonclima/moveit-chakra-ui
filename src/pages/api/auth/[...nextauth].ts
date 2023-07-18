@@ -1,49 +1,9 @@
-import NextAuth from 'next-auth';
 import { query as q } from 'faunadb';
+import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+import { Profile } from '../../../interfaces/Profile';
+import { User } from '../../../interfaces/User';
 import { fauna } from '../../../services/fauna';
-
-
-type Profile = {
-  id: number;
-  name: string;
-  login: string;
-  email: string;
-  avatar_url: string;
-}
-
-type Data = {
-  ref: {
-    id: string;
-  },
-  data: {
-    id: number;
-    provider: string;
-    name: string;
-    login: string;
-    email: string;
-    avatar_url: string;
-    level: number;
-    currentExperience: number;
-    challengesCompleted: number;
-  }
-}
-
-type User = {
-  data: {
-    data: {
-      id: number;
-      provider: string;
-      name: string;
-      login: string;
-      email: string;
-      avatar_url: string;
-      level: number;
-      currentExperience: number;
-      challengesCompleted: number;
-    }
-  }
-}
 
 export default NextAuth({
 
@@ -61,7 +21,7 @@ export default NextAuth({
 
       try {
 
-        const { data } = await fauna.query<Data>(
+        const { data } = await fauna.query<User>(
           q.If(q.And(
             q.Not(q.Exists(q.Match(q.Index('user_by_id'), q.Casefold(id)))),
             q.Not(q.Exists(q.Match(q.Index('user_by_email'), q.Casefold(email)))),

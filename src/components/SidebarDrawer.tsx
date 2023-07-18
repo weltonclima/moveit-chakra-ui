@@ -1,7 +1,14 @@
 import {
-  Icon, useBreakpointValue, Drawer, DrawerOverlay,
-  DrawerContent, DrawerCloseButton, DrawerHeader, DrawerBody,
-  Link, Text, Stack
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Icon,
+  Link,
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/router";

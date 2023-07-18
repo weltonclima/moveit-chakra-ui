@@ -1,6 +1,5 @@
-import { Icon, Flex, Img, FlexProps, Link as ChakraLink } from "@chakra-ui/react";
+import { Link as ChakraLink, Flex, FlexProps, Icon, Img } from "@chakra-ui/react";
 import { signOut } from "next-auth/client";
-import { useRouter } from "next/dist/client/router";
 import { FiHome, FiLogOut } from 'react-icons/fi';
 import { RiMedalLine } from 'react-icons/ri';
 import { ActiveLink } from "./ActiveLink";
@@ -8,7 +7,6 @@ import { ActiveLink } from "./ActiveLink";
 type SideBarProp = FlexProps
 
 export function SideBar({ ...rest }: SideBarProp) {
-  const router = useRouter();
 
   return (
     <Flex as="aside" py="2" px="4" {...rest}

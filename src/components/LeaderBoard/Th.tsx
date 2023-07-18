@@ -1,4 +1,4 @@
-import { TableColumnHeaderProps, Th as ChakraTh } from "@chakra-ui/table";
+import { Th as ChakraTh, TableColumnHeaderProps } from "@chakra-ui/table";
 import { ReactNode } from "react";
 interface ThProps extends TableColumnHeaderProps {
   children: ReactNode

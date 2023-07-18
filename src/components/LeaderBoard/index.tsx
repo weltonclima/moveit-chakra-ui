@@ -2,7 +2,7 @@ import {
   Avatar, Box, Flex, Heading, Img, Table,
   Tbody, Text, Thead, Tr, useBreakpointValue
 } from "@chakra-ui/react";
-import { User } from "../../pages/loaderboard";
+import { User } from "../../interfaces/User";
 import { Td } from "./Td";
 import { Th } from "./Th";
 
